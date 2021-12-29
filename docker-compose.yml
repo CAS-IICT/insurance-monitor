@@ -7,17 +7,23 @@ services:
     restart: always
     ports:
       - 9090:9090
-    # volumes:
-    #   - ./prometheus/prometheus:/etc/prometheus
-    #   - ./prometheus/prometheus_data:/prometheus
-    # command:
-    #   - '--config.file=/etc/prometheus/prometheus.yml'
+    volumes:
+      - ./prometheus/prometheus:/etc/prometheus
+      # - ./prometheus/prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
     #   - '--storage.tsdb.path=/prometheus'
     #   - '--web.console.libraries=/usr/share/prometheus/console_libraries'
     #   - '--web.console.templates=/usr/share/prometheus/consoles'
+  pushgateway:
+    image: prom/pushgateway
+    container_name: pushgateway
+    restart: always
+    ports:
+      - 9091:9091
   grafana:
     image: grafana/grafana
     container_name: grafana
     restart: always
     ports:
-      - 9091:3000
+      - 9092:3000
